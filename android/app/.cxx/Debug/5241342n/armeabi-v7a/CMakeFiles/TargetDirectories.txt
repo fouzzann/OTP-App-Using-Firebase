@@ -1,0 +1,2 @@
+C:/BW-2-OTP using firebase/otp_using_firebase/android/app/.cxx/Debug/5241342n/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/BW-2-OTP using firebase/otp_using_firebase/android/app/.cxx/Debug/5241342n/armeabi-v7a/CMakeFiles/rebuild_cache.dir

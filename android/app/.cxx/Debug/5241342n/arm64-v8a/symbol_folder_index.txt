@@ -1,0 +1,1 @@
+C:\BW-2-OTP using firebase\otp_using_firebase\build\app\intermediates\cxx\Debug\5241342n\obj\arm64-v8a
