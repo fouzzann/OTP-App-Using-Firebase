@@ -1,40 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+import 'package:otp_using_firebase/controllers/web_view_controller.dart';
 import 'package:otp_using_firebase/views/screens/phone_auth.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebViewPage extends StatefulWidget {
-  const WebViewPage({Key? key}) : super(key: key);
 
-  @override
-  State<WebViewPage> createState() => _WebViewPageState();
-}
+class WebViewPage extends StatelessWidget {
+  final WebViewControllerX controllerX = Get.put(WebViewControllerX());
 
-class _WebViewPageState extends State<WebViewPage> {
-  late final WebViewController _controller;
-  bool isLoading = true; // Track loading state
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (String url) {
-            setState(() {
-              isLoading = true; // Show loading indicator
-            });
-          },
-          onPageFinished: (String url) {
-            setState(() {
-              isLoading = false; // Hide loading indicator
-            });
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse('https://flutter.dev/showcase'));
-  }
+  WebViewPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,29 +23,23 @@ class _WebViewPageState extends State<WebViewPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Get.to(() => PhoneAuth());
-            },
+            onPressed: () => Get.to(() => PhoneAuth()),
             icon: const Icon(Icons.logout),
           ),
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.black),
-            onPressed: () {
-              _controller.reload();
-            },
+            onPressed: controllerX.reloadPage,
           ),
         ],
       ),
       body: Stack(
         children: [
-          WebViewWidget(controller: _controller),
-          if (isLoading) 
-            const Center(
-              child: CircularProgressIndicator(color: Colors.blue),
-            ),
+          WebViewWidget(controller: controllerX.controller),
+          Obx(() => controllerX.isLoading.value
+              ? const Center(child: CircularProgressIndicator(color: Colors.blue))
+              : const SizedBox.shrink()),
         ],
       ),
     );
   }
 }
- 
