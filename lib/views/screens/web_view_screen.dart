@@ -23,7 +23,7 @@ class WebViewPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () => Get.to(() => PhoneAuth()),
+            onPressed: () => Get.to(() => PhoneAuthPage()),
             icon: const Icon(Icons.logout),
           ),
           IconButton(
