@@ -1,38 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:otp_using_firebase/controllers/opt_controller.dart';
-import 'package:otp_using_firebase/views/widgets/otp_screens/otp_header.dart';
-import 'package:otp_using_firebase/views/widgets/otp_screens/otp_input_field_widget.dart';
-import 'package:otp_using_firebase/views/widgets/otp_screens/otp_resend.dart';
-import 'package:otp_using_firebase/views/widgets/otp_screens/otp_verify_button.dart';
+import 'package:get/get.dart';
+import 'package:otp_using_firebase/controllers/otp_controller.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpScreen extends StatefulWidget {
+class OtpScreen extends StatelessWidget {
   final String phoneNumber;
-  final String verificationId;
+  final String verificationid;
+  final OtpController controller = Get.put(OtpController());
 
-  const OtpScreen({
-    super.key,
-    required this.verificationId,
-    required this.phoneNumber
-  });
-
-  @override
-  State<OtpScreen> createState() => _OtpScreenState();
-}
-
-class _OtpScreenState extends State<OtpScreen> {
-  late final OtpController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = OtpController(widget.verificationId);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  OtpScreen({super.key, required this.verificationid, required this.phoneNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +19,7 @@ class _OtpScreenState extends State<OtpScreen> {
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Get.back(),
         ),
         title: const Text(
           'Verification',
@@ -55,43 +31,92 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                
-                // Header section
-                OtpHeader(phoneNumber: widget.phoneNumber),
-                
-                const SizedBox(height: 40),
-                
-                // OTP input fields
-                OtpInputField(
-                  controller: _controller.otpController,
-                  onCompleted: _controller.verifyOtp,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              const Text(
+                'Verify your number',
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black87),
+              ),
+              const SizedBox(height: 12),
+              RichText(
+                text: TextSpan(
+                  style: const TextStyle(color: Colors.black54, fontSize: 16),
+                  children: [
+                    const TextSpan(text: 'Enter the code sent to '),
+                    TextSpan(
+                      text: phoneNumber,
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                    ),
+                  ],
                 ),
-                
-                const SizedBox(height: 20),
-                
-                // Resend code option
-                ResendCodeRow(onResend: _controller.resendCode),
-                
-                const SizedBox(height: 40),
-                
-                // Verify button
-                ValueListenableBuilder<bool>(
-                  valueListenable: _controller.isLoadingNotifier,
-                  builder: (context, isLoading, _) {
-                    return VerifyButton(
-                      isLoading: isLoading,
-                      onPressed: _controller.verifyOtp,
-                    );
-                  },
+              ),
+              const SizedBox(height: 40),
+              PinCodeTextField(
+                appContext: context,
+                length: 6,
+                obscureText: false,
+                animationType: AnimationType.fade,
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(12),
+                  fieldHeight: 50,
+                  fieldWidth: 45,
+                  activeFillColor: Colors.white,
+                  inactiveFillColor: Colors.grey.shade50,
+                  selectedFillColor: Colors.white,
+                  activeColor: Colors.blue,
+                  inactiveColor: Colors.grey.shade300,
+                  selectedColor: Colors.blue,
                 ),
-              ],
-            ),
+                cursorColor: Colors.black,
+                animationDuration: const Duration(milliseconds: 300),
+                enableActiveFill: true,
+                controller: controller.otpController,
+                keyboardType: TextInputType.number,
+                onCompleted: (v) => controller.verifyOtp(verificationid),
+                onChanged: (value) {},
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Didn't receive the code? ", style: TextStyle(color: Colors.black54, fontSize: 15)),
+                  TextButton(
+                    onPressed: () {
+                      // Resend OTP logic can be added here
+                    },
+                    child: const Text(
+                      "Resend",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 15),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: Obx(
+                  () => ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      elevation: 0,
+                    ),
+                    onPressed: controller.isLoading.value ? null : () => controller.verifyOtp(verificationid),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text(
+                            'Verify',
+                            style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w600),
+                          ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
