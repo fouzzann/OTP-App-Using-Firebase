@@ -4,7 +4,6 @@ import 'package:otp_using_firebase/controllers/web_view_controller.dart';
 import 'package:otp_using_firebase/views/screens/phone_auth.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-
 class WebViewPage extends StatelessWidget {
   final WebViewControllerX controllerX = Get.put(WebViewControllerX());
 
@@ -23,8 +22,21 @@ class WebViewPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () => Get.to(() => PhoneAuthPage()),
-            icon: const Icon(Icons.logout),
+            onPressed: () {
+              // Show confirmation dialog before logout
+              Get.defaultDialog(
+                title: "Logout",
+                middleText: "Are you sure you want to logout?",
+                textConfirm: "Yes",
+                textCancel: "No",
+                confirmTextColor: Colors.white,
+                onConfirm: () {
+                  Get.back(); // Close dialog
+                  Get.offAll(() => PhoneAuthPage()); // Navigate to login
+                },
+              );
+            },
+            icon: const Icon(Icons.logout, color: Colors.black),
           ),
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.black),
@@ -41,5 +53,5 @@ class WebViewPage extends StatelessWidget {
         ],
       ),
     );
-  }
+  } 
 }
