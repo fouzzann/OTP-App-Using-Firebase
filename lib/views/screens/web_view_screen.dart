@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otp_using_firebase/controllers/phone_controller.dart';
 import 'package:otp_using_firebase/controllers/web_view_controller.dart';
 import 'package:otp_using_firebase/views/screens/phone_auth.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -32,7 +33,14 @@ class WebViewPage extends StatelessWidget {
                 confirmTextColor: Colors.white,
                 onConfirm: () {
                   Get.back(); // Close dialog
-                  Get.offAll(() => PhoneAuthPage()); // Navigate to login
+
+                  // Delete the PhoneAuthController to reset state
+                  if (Get.isRegistered<PhoneAuthController>()) {
+                    Get.delete<PhoneAuthController>();
+                  }
+
+                  // Navigate to PhoneAuthPage
+                  Get.offAll(() => PhoneAuthPage());
                 },
               );
             },
@@ -53,5 +61,5 @@ class WebViewPage extends StatelessWidget {
         ],
       ),
     );
-  } 
+  }
 }
