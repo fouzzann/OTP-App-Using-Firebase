@@ -24,7 +24,7 @@ class PhoneInputField extends StatelessWidget {
         fillColor: Colors.grey.withOpacity(0.1),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
-          vertical: 16, 
+          vertical: 16,
         ),
       ),
       initialCountryCode: initialCountryCode,
