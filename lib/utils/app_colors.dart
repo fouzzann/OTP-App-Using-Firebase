@@ -1,3 +1,4 @@
+// lib/constants/app_colors.dart
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -36,4 +37,10 @@ class AppColors {
   static const Color iconPrimary = Color(0xFF616161);
   static const Color iconSecondary = Color(0xFF9E9E9E);
   static const Color iconAccent = Color(0xFF2196F3);
+
+  // Additional Colors for Phone Auth
+  static const Color appBarText = Color(0xFF212121); // Using existing textPrimary
+  static const Color headerIconColor = Color(0xFF2196F3); // Using existing primary
+  static const Color loadingIndicator = Color(0xFF2196F3); // Using existing primary
+  static const Color termsLinkColor = Color(0xFF2196F3); // Using existing primary
 }

@@ -1,85 +1,63 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:otp_using_firebase/utils/app_colors.dart';
-import 'package:otp_using_firebase/utils/app_text_style.dart';
+import 'package:otp_using_firebase/utils/phone_auth_const.dart';
 
 class TermsText extends StatelessWidget {
   const TermsText({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'By continuing, you agree to our Terms of Service and Privacy Policy',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 12,
-        color: Colors.black45,
-      ),
-    );
-  }
-}
-
-
-class TermsTextWidget extends StatelessWidget {
-  final VoidCallback? onTermsPressed;
-  final VoidCallback? onPrivacyPressed;
-  final String? customText;
-
-  const TermsTextWidget({
-    Key? key,
-    this.onTermsPressed,
-    this.onPrivacyPressed,
-    this.customText,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: PhoneAuthConstants.mediumSpacing),
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-          style: AppTextStyles.caption,
+          style: const TextStyle(
+            fontSize: PhoneAuthConstants.termsTextSize,
+            color: AppColors.textSecondary,
+            height: 1.4,
+          ),
           children: [
+            const TextSpan(text: 'By continuing, you agree to our '),
             TextSpan(
-              text: customText ?? 
-                  'By continuing, you agree to our ',
-            ),
-            TextSpan(
-              text: 'Terms of Service',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                decoration: TextDecoration.underline,
+              text: PhoneAuthConstants.termsOfServiceText,
+              style: const TextStyle(
+                color: AppColors.termsLinkColor,
                 fontWeight: FontWeight.w500,
               ),
               recognizer: TapGestureRecognizer()
-                ..onTap = onTermsPressed ?? _defaultTermsAction,
+                ..onTap = () {
+                  // Handle Terms of Service tap
+                  _handleTermsOfServiceTap();
+                },
             ),
             const TextSpan(text: ' and '),
             TextSpan(
-              text: 'Privacy Policy',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                decoration: TextDecoration.underline,
+              text: PhoneAuthConstants.privacyPolicyText,
+              style: const TextStyle(
+                color: AppColors.termsLinkColor,
                 fontWeight: FontWeight.w500,
               ),
               recognizer: TapGestureRecognizer()
-                ..onTap = onPrivacyPressed ?? _defaultPrivacyAction,
+                ..onTap = () {
+                  // Handle Privacy Policy tap
+                  _handlePrivacyPolicyTap();
+                },
             ),
-            const TextSpan(text: '.'),
           ],
         ),
       ),
     );
   }
 
-  void _defaultTermsAction() {
-    // Default action for terms - can be overridden
-    debugPrint('Terms of Service clicked');
+  void _handleTermsOfServiceTap() {
+    // Implement navigation to Terms of Service
+    print('Terms of Service tapped');
   }
 
-  void _defaultPrivacyAction() {
-    // Default action for privacy - can be overridden
-    debugPrint('Privacy Policy clicked');
+  void _handlePrivacyPolicyTap() {
+    // Implement navigation to Privacy Policy
+    print('Privacy Policy tapped');
   }
 }
