@@ -1,37 +1,39 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  // Primary Colors
   static const Color primary = Color(0xFF2196F3);
-  static const Color secondary = Color(0xFF03DAC6);
-  static const Color accent = Color(0xFFFF9800);
+  static const Color primaryDark = Color(0xFF1976D2);
+  static const Color primaryLight = Color(0xFFBBDEFB);
+  
+  // Background Colors
   static const Color background = Colors.white;
-  static const Color surface = Colors.white;
-  static const Color error = Color(0xFFB00020);
+  static const Color scaffoldBackground = Colors.white;
+  static const Color cardBackground = Color(0xFFF8F9FA);
+  
+  // Text Colors
+  static const Color textPrimary = Color(0xFF212121);
+  static const Color textSecondary = Color(0xFF757575);
+  static const Color textHint = Color(0xFF9E9E9E);
+  
+  // Button Colors
+  static const Color buttonPrimary = Color(0xFF2196F3);
+  static const Color buttonSecondary = Color(0xFFE3F2FD);
+  static const Color buttonDisabled = Color(0xFFBDBDBD);
+  
+  // Status Colors
   static const Color success = Color(0xFF4CAF50);
+  static const Color error = Color(0xFFF44336);
   static const Color warning = Color(0xFFFF9800);
   static const Color info = Color(0xFF2196F3);
   
-  // Text colors
-  static const Color textPrimary = Colors.black87;
-  static const Color textSecondary = Colors.black54;
-  static const Color textHint = Colors.grey;
-  static const Color textDisabled = Colors.black38;
+  // Border Colors
+  static const Color borderPrimary = Color(0xFFE0E0E0);
+  static const Color borderFocused = Color(0xFF2196F3);
+  static const Color borderError = Color(0xFFF44336);
   
-  // Component colors
-  static const Color divider = Color(0xFFE0E0E0);
-  static const Color cardBackground = Colors.white;
-  static const Color shadow = Color(0x1A000000);
-  static const Color transparent = Colors.transparent;
-  static const Color scaffoldBackground = Color(0xFFF5F5F5);
-  
-  // Button colors
-  static const Color buttonPrimary = Color(0xFF2196F3);
-  static const Color buttonSecondary = Color(0xFFE0E0E0);
-  static const Color buttonDisabled = Color(0xFFBDBDBD);
-  
-  // Input field colors
-  static const Color inputBorder = Color(0xFFE0E0E0);
-  static const Color inputFocus = Color(0xFF2196F3);
-  static const Color inputError = Color(0xFFB00020);
-  static const Color inputFill = Color(0xFFF5F5F5);
+  // Icon Colors
+  static const Color iconPrimary = Color(0xFF616161);
+  static const Color iconSecondary = Color(0xFF9E9E9E);
+  static const Color iconAccent = Color(0xFF2196F3);
 }
